@@ -3,6 +3,7 @@ package main;
 import repository.TicketRepository;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class TicketManager {
 
@@ -12,7 +13,7 @@ public class TicketManager {
         this.repo = repo;
     }
 
-    public Ticket[] findAll(String from, String to) {
+    public Ticket[] findAll(String from, String to, Comparator<Ticket> comparator) {
 
         Ticket[] result = new Ticket[0];
         for (Ticket ticket : repo.findAll()) {
@@ -21,7 +22,7 @@ public class TicketManager {
                 System.arraycopy(result, 0, tmp, 0, result.length);
                 tmp[tmp.length - 1] = ticket;
                 result = tmp;
-                Arrays.sort(result);
+                Arrays.sort(result, comparator);
             }
         }
         return result;

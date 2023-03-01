@@ -42,7 +42,7 @@ public class Ticket implements Comparable<Ticket> {
         return from;
     }
 
-    public void setFrom(String departureAirport) {
+    public void setFrom(String from) {
 
         this.from = from;
     }

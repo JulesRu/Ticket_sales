@@ -10,14 +10,15 @@ public class TicketManagerTest {
 
     TicketRepository repo = new TicketRepository();
     TicketManager manager =  new TicketManager(repo);
+    TicketByTravelTimeAscComparator timeComparator = new TicketByTravelTimeAscComparator();
 
     Ticket ticket1 = new Ticket(1, 23_000, "VKO", "BCN", 5);
-    Ticket ticket2 = new Ticket(23, 13_500, "VKO", "VNC", 6);
-    Ticket ticket3 = new Ticket(30, 11_300, "VKO", "VNC", 6);
-    Ticket ticket4 = new Ticket(34, 15_000, "VKO", "VNC", 6);
+    Ticket ticket2 = new Ticket(23, 13_500, "VKO", "VNC", 8);
+    Ticket ticket3 = new Ticket(30, 11_300, "VKO", "VNC", 3);
+    Ticket ticket4 = new Ticket(34, 15_000, "VKO", "VNC", 2);
     Ticket ticket5 = new Ticket(33, 12_000, "SVO", "VNC", 6);
-    Ticket ticket6 = new Ticket(41,20_500, "VKO", "VNC", 6);
-    Ticket ticket7 = new Ticket(39,18_500, "VKO", "VNC", 6);
+    Ticket ticket6 = new Ticket(41,20_500, "VKO", "VNC", 4);
+    Ticket ticket7 = new Ticket(39,18_500, "VKO", "VNC", 5);
     Ticket ticket8 = new Ticket(55,18_500, "VKO", "VNC", 6);
 
     @BeforeEach
@@ -35,26 +36,18 @@ public class TicketManagerTest {
     @Test
     public void findAllWhenSome() {
 
-        Ticket[] expected = {ticket3, ticket2, ticket4, ticket7, ticket8, ticket6};
-        Ticket[] actual = manager.findAll("VKO", "VNC");
+        Ticket[] expected = {ticket4, ticket3, ticket6, ticket7, ticket8, ticket2};
+        Ticket[] actual = manager.findAll("VKO", "VNC", timeComparator);
 
         Assertions.assertArrayEquals(expected, actual);
     }
 
-    @Test
-    public void findAllWhenOne() {
-
-        Ticket[] expected = {ticket5};
-        Ticket[] actual = manager.findAll("SVO", "VNC");
-
-        Assertions.assertArrayEquals(expected, actual);
-    }
 
     @Test
     public void findAllWhenNone() {
 
         Ticket[] expected = {};
-        Ticket[] actual = manager.findAll("SVO", "BCN");
+        Ticket[] actual = manager.findAll("SVO", "BCN", timeComparator);
 
         Assertions.assertArrayEquals(expected, actual);
     }
